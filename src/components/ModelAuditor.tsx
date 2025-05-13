@@ -68,18 +68,20 @@ const ModelAuditor: React.FC<ModelAuditorProps> = ({ modelId, className }) => {
       <CardContent>
         {allModels.length > 1 && (
           <div className="mb-6">
-            <TabsList className="w-full">
-              {allModels.map(model => (
-                <TabsTrigger
-                  key={model.modelId}
-                  value={model.modelId}
-                  onClick={() => setSelectedModel(model.modelId)}
-                  className={selectedModel === model.modelId ? 'bg-hdep-primary text-white' : ''}
-                >
-                  {model.name}
-                </TabsTrigger>
-              ))}
-            </TabsList>
+            <Tabs defaultValue={selectedModel || allModels[0]?.modelId}>
+              <TabsList className="w-full">
+                {allModels.map(model => (
+                  <TabsTrigger
+                    key={model.modelId}
+                    value={model.modelId}
+                    onClick={() => setSelectedModel(model.modelId)}
+                    className={selectedModel === model.modelId ? 'bg-hdep-primary text-white' : ''}
+                  >
+                    {model.name}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
           </div>
         )}
         
@@ -100,9 +102,9 @@ const ModelAuditor: React.FC<ModelAuditorProps> = ({ modelId, className }) => {
                   <span className="text-sm font-medium">False Positives</span>
                   <span className="text-sm">{(filteredModel.falsePositives * 100).toFixed(1)}%</span>
                 </div>
-                <Progress value={filteredModel.falsePositives * 100} 
+                <Progress 
+                  value={filteredModel.falsePositives * 100} 
                   className={cn("h-2", filteredModel.falsePositives > 0.1 ? "bg-red-100" : "bg-amber-100")} 
-                  indicatorClassName={filteredModel.falsePositives > 0.1 ? "bg-red-500" : "bg-amber-500"}
                 />
               </div>
               
@@ -111,9 +113,9 @@ const ModelAuditor: React.FC<ModelAuditorProps> = ({ modelId, className }) => {
                   <span className="text-sm font-medium">False Negatives</span>
                   <span className="text-sm">{(filteredModel.falseNegatives * 100).toFixed(1)}%</span>
                 </div>
-                <Progress value={filteredModel.falseNegatives * 100} 
+                <Progress 
+                  value={filteredModel.falseNegatives * 100} 
                   className={cn("h-2", filteredModel.falseNegatives > 0.05 ? "bg-red-100" : "bg-amber-100")}
-                  indicatorClassName={filteredModel.falseNegatives > 0.05 ? "bg-red-500" : "bg-amber-500"} 
                 />
               </div>
             </div>
